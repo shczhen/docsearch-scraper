@@ -40,7 +40,6 @@ def run_config(config):
         config.app_id,
         config.api_key,
         config.index_name,
-        config.index_name_tmp,
         AlgoliaSettings.get(config, strategy.levels),
         config.query_rules
     )
@@ -99,12 +98,13 @@ def run_config(config):
     BrowserHandler.destroy(config.driver)
 
     if len(config.extra_records) > 0:
+        print('extra  records...')
         algolia_helper.add_records(config.extra_records, "Extra records", False)
 
     print("")
 
     if DocumentationSpider.NB_INDEXED > 0:
-        algolia_helper.commit_tmp_index()
+        # algolia_helper.commit_tmp_index()
         print('Nb hits: {}'.format(DocumentationSpider.NB_INDEXED))
         config.update_nb_hits_value(DocumentationSpider.NB_INDEXED)
     else:

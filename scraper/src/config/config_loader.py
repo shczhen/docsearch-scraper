@@ -41,6 +41,7 @@ class ConfigLoader:
     selectors_exclude = []
     start_urls = []
     stop_urls = []
+    delete_urls = []
     stop_content = []
     strategy = 'default'
     strict_redirect = True
@@ -121,6 +122,9 @@ class ConfigLoader:
         self.min_indexed_level = SelectorsParser().parse_min_indexed_level(
             self.min_indexed_level)
         self.start_urls = UrlsParser.parse(self.start_urls)
+        print("start_urls.....: ", self.start_urls)
+        print(".....: \n")
+        print("delete_urls.....: ", self.delete_urls)
 
         # Build default allowed_domains from start_urls and stop_urls
         if self.allowed_domains is None:

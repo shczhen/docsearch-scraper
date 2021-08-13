@@ -78,6 +78,7 @@ class DocumentationSpider(CrawlSpider, SitemapSpider):
         self.scrape_start_urls = config.scrape_start_urls
         self.remove_get_params = config.remove_get_params
         self.strict_redirect = config.strict_redirect
+        self.delete_urls = config.delete_urls
         self.nb_hits_max = config.nb_hits_max
         super(DocumentationSpider, self).__init__(*args, **kwargs)
 
@@ -122,6 +123,11 @@ class DocumentationSpider(CrawlSpider, SitemapSpider):
         super(DocumentationSpider, self)._compile_rules()
 
     def start_requests(self):
+        # Delete records of existing URLs
+        if len(self.delete_urls) > 0:
+            print("trying to delete....: ", self.delete_urls)
+            self.algolia_helper.delete_records(self.delete_urls)
+
         # We crawl according to the sitemap
         for url in self.sitemap_urls:
             yield Request(url, callback=self._parse_sitemap,

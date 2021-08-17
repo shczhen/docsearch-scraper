@@ -133,6 +133,7 @@ def find_command(name, cmds):
 
 
 def run():
+    print('sys.argv', sys.argv)
     help_needed = "--help" in sys.argv
 
     if help_needed:

@@ -29,7 +29,7 @@ except ImportError:
 EXIT_CODE_NO_RECORD = 3
 
 
-def run_config(config):
+def run_config(config, isIncremental):
     config = ConfigLoader(config)
     CustomDownloaderMiddleware.driver = config.driver
     DocumentationSpider.NB_INDEXED = 0
@@ -40,8 +40,10 @@ def run_config(config):
         config.app_id,
         config.api_key,
         config.index_name,
+        config.index_name_tmp,
         AlgoliaSettings.get(config, strategy.levels),
-        config.query_rules
+        config.query_rules,
+        isIncremental
     )
 
     root_module = 'src.' if __name__ == '__main__' else 'scraper.src.'
@@ -104,7 +106,10 @@ def run_config(config):
     print("")
 
     if DocumentationSpider.NB_INDEXED > 0:
-        # algolia_helper.commit_tmp_index()
+        if not isIncremental:
+            print('replacing index..................')
+            algolia_helper.commit_tmp_index()
+
         print('Nb hits: {}'.format(DocumentationSpider.NB_INDEXED))
         config.update_nb_hits_value(DocumentationSpider.NB_INDEXED)
     else:

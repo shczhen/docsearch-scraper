@@ -16,7 +16,8 @@ class RunConfig(AbstractCommand):
 
     def run(self, args):
         from scraper.src.index import run_config
+        isIncremental = "--incremental" in args
+        print("args", args, isIncremental)
 
         self.check_not_docsearch_app_id("run a config manually")
-        return run_config(args[0])
-    
+        return run_config(args[0], isIncremental)

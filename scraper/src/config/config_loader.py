@@ -10,6 +10,7 @@ from distutils.util import strtobool
 import json
 import os
 import copy
+from scraper.src.config.urls_setter import URLSetter
 
 from .config_validator import ConfigValidator
 from .nb_hits_updater import NbHitsUpdater
@@ -121,7 +122,7 @@ class ConfigLoader:
         self.selectors = SelectorsParser().parse(self.selectors)
         self.min_indexed_level = SelectorsParser().parse_min_indexed_level(
             self.min_indexed_level)
-        self.start_urls = UrlsParser.parse(self.start_urls)
+        self.start_urls = UrlsParser.parse(self.update_start_urls())
         print("start_urls.....: ", self.start_urls)
         print(".....: \n")
         print("delete_urls.....: ", self.delete_urls)
@@ -130,6 +131,10 @@ class ConfigLoader:
         if self.allowed_domains is None:
             self.allowed_domains = UrlsParser.build_allowed_domains(
                 self.start_urls, self.stop_urls)
+
+    def update_start_urls(self):
+        start_urls = URLSetter.diff_files()
+        return start_urls
 
     def update_nb_hits_value(self, nb_hits):
         if self.config_file is not None:

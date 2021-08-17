@@ -1,7 +1,6 @@
 """AlgoliaHelper
 Wrapper on top of the AlgoliaSearch API client"""
 
-from deployer.src.emails import delete
 from algoliasearch.search_client import SearchClient
 
 from builtins import range
@@ -10,28 +9,38 @@ from builtins import range
 class AlgoliaHelper:
     """AlgoliaHelper"""
 
-    def __init__(self, app_id, api_key, index_name, settings, query_rules):
+    def __init__(self, app_id, api_key, index_name, index_name_tmp, settings, query_rules, isIncremental):
         self.algolia_client = SearchClient.create(app_id, api_key)
         self.index_name = index_name
-        # self.index_name_tmp = index_name_tmp
         self.algolia_index = self.algolia_client.init_index(self.index_name)
-        # self.algolia_index_tmp = self.algolia_client.init_index(
-        #     self.index_name_tmp)
-        # self.algolia_client.copy_rules(
-        #     self.index_name,
-        #     self.index_name_tmp
-        # )
-        self.algolia_index.set_settings(settings)
+
+        print('isIncremental', isIncremental)
+
+        if isIncremental:
+            print('true=====')
+            self.dest_algolia_index = self.algolia_index
+        else:
+            print('false=====')
+            self.index_name_tmp = index_name_tmp
+            self.algolia_index_tmp = self.algolia_client.init_index(
+                self.index_name_tmp)
+            self.algolia_client.copy_rules(
+                self.index_name,
+                self.index_name_tmp
+            )
+            self.dest_algolia_index = self.algolia_index_tmp
+
+        self.dest_algolia_index.set_settings(settings)
 
         if len(query_rules) > 0:
-            self.algolia_index.save_rules(query_rules, True, True)
+            self.dest_algolia_index.save_rules(query_rules, True, True)
 
     def add_records(self, records, url, from_sitemap):
         """Add new records to the temporary index"""
         record_count = len(records)
 
         for i in range(0, record_count, 50):
-            self.algolia_index.save_objects(records[i:i + 50])
+            self.dest_algolia_index.save_objects(records[i:i + 50])
 
         color = "96" if from_sitemap else "94"
 
@@ -40,12 +49,11 @@ class AlgoliaHelper:
                 color, url, record_count))
 
     def delete_records(self, delete_urls):
-        print('deleting..... ', delete_urls)
         filter = ""
         for url in delete_urls:
             filter = filter + "url_without_anchor:\"" + url + "\" OR "
 
-        self.algolia_index.delete_by({
+        self.dest_algolia_index.delete_by({
             'filters': filter[:-4]
         })
 
@@ -54,7 +62,7 @@ class AlgoliaHelper:
         for _, value in list(synonyms.items()):
             synonyms_list.append(value)
 
-        self.algolia_index.save_synonyms(synonyms_list)
+        self.dest_algolia_index.save_synonyms(synonyms_list)
         print(
             '\033[94m> DocSearch: \033[0m Synonyms (\033[93m{} synonyms\033[0m)'.format(
                 len(synonyms_list)))

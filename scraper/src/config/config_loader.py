@@ -42,6 +42,7 @@ class ConfigLoader:
     selectors_exclude = []
     start_urls = []
     stop_urls = []
+    docs_info = None
     delete_urls = []
     stop_content = []
     strategy = 'default'
@@ -133,7 +134,8 @@ class ConfigLoader:
                 self.start_urls, self.stop_urls)
 
     def update_start_urls(self):
-        start_urls = URLSetter.diff_files()
+        print('self       88888888', self.docs_info)
+        start_urls = URLSetter.diff_files(self.docs_info)
         return start_urls
 
     def update_nb_hits_value(self, nb_hits):

@@ -1,8 +1,14 @@
 {
-  "index_name": "test-zh-dev-guide",
+  "index_name": "zh-dev-guide-dev",
   "start_urls": [
     "https://docs.pingcap.com/zh/dev-guide/dev"
   ],
+  "docs_info": {
+    "docs_repo": "dev-guide",
+    "ref": "master",
+    "docs_prefix": "dev-guide",
+    "lang": "zh"
+  },
   "sitemap_urls": [
     "http://docs.pingcap.com/sitemap.xml"
   ],

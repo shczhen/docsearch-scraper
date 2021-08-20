@@ -134,7 +134,6 @@ class ConfigLoader:
                 self.start_urls, self.stop_urls)
 
     def update_start_urls(self):
-        print('self       88888888', self.docs_info)
         start_urls = URLSetter.diff_files(self.docs_info)
         return start_urls
 

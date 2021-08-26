@@ -111,9 +111,10 @@ class DocumentationSpider(CrawlSpider, SitemapSpider):
             if self.sitemap_urls_regexs:
                 for regex in self.sitemap_urls_regexs:
                     sitemap_rules.append((regex, 'parse_from_sitemap'))
-            else:  # Neither start url nor regex: default, we parse all
-                print("Neither start url nor regex: default, we scrap all")
-                sitemap_rules = [('.*', 'parse_from_sitemap')]
+            # allow start_url is empty, since we have incremental cralwer feature
+            # else:  # Neither start url nor regex: default, we parse all
+            #     print("Neither start url nor regex: default, we scrap all")
+            #     sitemap_rules = [('.*', 'parse_from_sitemap')]
 
             self.__init_sitemap_(config.sitemap_urls, sitemap_rules,
                                  config.sitemap_alternate_links)

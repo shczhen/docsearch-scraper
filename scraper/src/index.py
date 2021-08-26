@@ -8,6 +8,7 @@ from requests_iap import IAPAuth
 
 from scrapy.crawler import CrawlerProcess
 
+from .config.latest_commit_handler import UpdateLatestCommit
 from .algolia_helper import AlgoliaHelper
 from .config.config_loader import ConfigLoader
 from .documentation_spider import DocumentationSpider
@@ -30,7 +31,7 @@ EXIT_CODE_NO_RECORD = 3
 
 
 def run_config(config, isIncremental):
-    config = ConfigLoader(config)
+    config = ConfigLoader(config, isIncremental)
     CustomDownloaderMiddleware.driver = config.driver
     DocumentationSpider.NB_INDEXED = 0
 
@@ -100,18 +101,20 @@ def run_config(config, isIncremental):
     BrowserHandler.destroy(config.driver)
 
     if len(config.extra_records) > 0:
-        print('extra  records...')
         algolia_helper.add_records(config.extra_records, "Extra records", False)
 
     print("")
 
     if DocumentationSpider.NB_INDEXED > 0:
         if not isIncremental:
-            print('replacing index..................')
             algolia_helper.commit_tmp_index()
 
+        # update docsType-Version lastest commit to json file
+        update_latest_commit = UpdateLatestCommit(config.docs_info)
+        update_latest_commit.update_base_commit()
+
         print('Nb hits: {}'.format(DocumentationSpider.NB_INDEXED))
-        config.update_nb_hits_value(DocumentationSpider.NB_INDEXED)
+        # config.update_nb_hits_value(DocumentationSpider.NB_INDEXED)
     else:
         print('Crawling issue: nbHits 0 for ' + config.index_name)
         exit(EXIT_CODE_NO_RECORD)

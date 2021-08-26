@@ -1,11 +1,11 @@
 {
-  "index_name": "zh-tidb-data-migration-dev",
+  "index_name": "en-tidb-data-migration-dev",
   "docs_info": {
     "owner": "pingcap",
     "docs_repo": "docs-dm",
     "ref": "master",
     "docs_prefix": "tidb-data-migration",
-    "lang": "zh",
+    "lang": "en",
     "version": "dev"
   },
   "start_urls": [],
@@ -52,5 +52,5 @@
     "428916846"
   ],
   "only_content_level": true,
-  "nb_hits": 105
+  "nb_hits": 8578
 }

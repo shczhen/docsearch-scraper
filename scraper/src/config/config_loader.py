@@ -53,6 +53,7 @@ class ConfigLoader:
     user_agent = 'Algolia DocSearch Crawler'
     only_content_level = False
     query_rules = []
+    isIncremental = False
 
     # data storage, starting here attribute are not config params
     config_file = None
@@ -68,8 +69,9 @@ class ConfigLoader:
 
     nb_hits_max = 6000000
 
-    def __init__(self, config):
+    def __init__(self, config, isIncremental):
         data = self._load_config(config)
+        self.isIncremental = isIncremental
 
         # Fill self from config
         for key, value in list(data.items()):
@@ -123,19 +125,19 @@ class ConfigLoader:
         self.selectors = SelectorsParser().parse(self.selectors)
         self.min_indexed_level = SelectorsParser().parse_min_indexed_level(
             self.min_indexed_level)
-        self.start_urls = UrlsParser.parse(self.update_start_urls())
-        print("start_urls.....: ", self.start_urls)
-        print(".....: \n")
-        print("delete_urls.....: ", self.delete_urls)
+        start_urls_arr, delete_ulrs_arr = self.get_start_and_delete_urls()
+        self.start_urls = UrlsParser.parse(start_urls_arr)
+        self.delete_urls = delete_ulrs_arr
 
         # Build default allowed_domains from start_urls and stop_urls
         if self.allowed_domains is None:
             self.allowed_domains = UrlsParser.build_allowed_domains(
                 self.start_urls, self.stop_urls)
 
-    def update_start_urls(self):
-        start_urls = URLSetter.diff_files(self.docs_info)
-        return start_urls
+    def get_start_and_delete_urls(self):
+        url_setter = URLSetter(self.docs_info, self.isIncremental)
+        start_urls_arr,delete_ulrs_arr = url_setter.diff_files()
+        return start_urls_arr, delete_ulrs_arr
 
     def update_nb_hits_value(self, nb_hits):
         if self.config_file is not None:

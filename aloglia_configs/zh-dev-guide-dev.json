@@ -1,28 +1,20 @@
 {
-  "index_name": "zh-tidb-data-migration-dev",
+  "index_name": "zh-dev-guide-dev",
   "docs_info": {
     "owner": "pingcap",
-    "docs_repo": "docs-dm",
+    "docs_repo": "dev-guide",
     "ref": "master",
-    "docs_prefix": "tidb-data-migration",
+    "docs_prefix": "dev-guide",
     "lang": "zh",
     "version": "dev"
   },
   "start_urls": [],
   "delete_urls": [],
   "sitemap_urls": [
-    "https://docs.pingcap.com/sitemap.xml"
+    "http://docs.pingcap.com/sitemap.xml"
   ],
   "selectors": {
     "default": {
-      "lvl0": ".doc-content h1",
-      "lvl1": ".doc-content h2",
-      "lvl2": ".doc-content h3",
-      "lvl3": ".doc-content h4",
-      "lvl4": ".doc-content h5",
-      "text": ".doc-content p, .doc-content li, .doc-content table tr, .doc-content code span"
-    },
-    "docs_cn": {
       "lvl0": ".doc-content h1",
       "lvl1": ".doc-content h2",
       "lvl2": ".doc-content h3",
@@ -52,5 +44,5 @@
     "428916846"
   ],
   "only_content_level": true,
-  "nb_hits": 105
+  "nb_hits": 143
 }

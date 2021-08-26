@@ -1,16 +1,17 @@
 {
-  "index_name": "zh-dev-guide-master",
-  "start_urls": [
-    "https://docs.pingcap.com/zh/dev-guide/dev"
-  ],
+  "index_name": "en-tidbcloud-public-preview",
   "docs_info": {
-    "docs_repo": "dev-guide",
+    "owner": "tidbcloud",
+    "docs_repo": "dbaas-docs",
     "ref": "master",
-    "docs_prefix": "dev-guide",
-    "lang": "zh"
+    "docs_prefix": "tidbcloud",
+    "lang": "en",
+    "version": "public-preview"
   },
+  "start_urls": [],
+  "delete_urls": [],
   "sitemap_urls": [
-    "http://docs.pingcap.com/sitemap.xml"
+    "https://docs.pingcap.com/sitemap.xml"
   ],
   "selectors": {
     "default": {
@@ -22,7 +23,6 @@
       "text": ".doc-content p, .doc-content li, .doc-content table tr, .doc-content code span"
     }
   },
-  "delete_urls": [],
   "selectors_exclude": [
     ".error"
   ],
@@ -44,5 +44,5 @@
     "428916846"
   ],
   "only_content_level": true,
-  "nb_hits": 6
+  "nb_hits": 2153
 }

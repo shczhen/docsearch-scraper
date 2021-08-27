@@ -13,7 +13,7 @@ class URLSetter:
     docs_url_prefix = None
     isIncremental = None
     GITHUT_API_BASE_URL = 'https://api.github.com/repos/'
-    DOCS_WEBSITE_BASE_URL = 'https://docs.pingcap.com/'
+    DOCS_WEBSITE_BASE_URL = ''
     DOCS_REPO_WITHOUT_LANG_PATH = [
         'docs',
         'docs-cn',
@@ -21,13 +21,15 @@ class URLSetter:
     ]
     IGNORE_FILES = ['TOC.md', 'README.md']
 
-    def __init__(self, docs_info, isIncremntal):
+    def __init__(self, docs_info, isIncremntal, isCrawlLocalURL):
         self.docs_repo = docs_info['docs_repo']
         self.docs_version = docs_info['version']
         self.docs_owner = docs_info['owner']
         self.docs_lang = 'zh/' if docs_info['lang'] == 'zh' else ''
         self.docs_url_prefix = docs_info['docs_prefix']
         self.isIncremental = isIncremntal
+        self.isCrawlLocalURL = isCrawlLocalURL
+        self.DOCS_WEBSITE_BASE_URL = 'http://localhost:9000/' if self.isCrawlLocalURL else 'https://docs.pingcap.com/'
         self.update_latest_commit = UpdateLatestCommit(docs_info)
 
     def gen_url(self, filename):

@@ -54,6 +54,7 @@ class ConfigLoader:
     only_content_level = False
     query_rules = []
     isIncremental = False
+    isCrawlLocalURL = False
 
     # data storage, starting here attribute are not config params
     config_file = None
@@ -69,9 +70,10 @@ class ConfigLoader:
 
     nb_hits_max = 6000000
 
-    def __init__(self, config, isIncremental):
+    def __init__(self, config, isIncremental, isCrawlLocalURL):
         data = self._load_config(config)
         self.isIncremental = isIncremental
+        self.isCrawlLocalURL = isCrawlLocalURL
 
         # Fill self from config
         for key, value in list(data.items()):
@@ -127,6 +129,7 @@ class ConfigLoader:
             self.min_indexed_level)
         start_urls_arr, delete_ulrs_arr = self.get_start_and_delete_urls()
         self.start_urls = UrlsParser.parse(start_urls_arr)
+        print('after parse: start_urls======', self.start_urls)
         self.delete_urls = delete_ulrs_arr
 
         # Build default allowed_domains from start_urls and stop_urls
@@ -135,7 +138,7 @@ class ConfigLoader:
                 self.start_urls, self.stop_urls)
 
     def get_start_and_delete_urls(self):
-        url_setter = URLSetter(self.docs_info, self.isIncremental)
+        url_setter = URLSetter(self.docs_info, self.isIncremental, self.isCrawlLocalURL)
         start_urls_arr,delete_ulrs_arr = url_setter.diff_files()
         return start_urls_arr, delete_ulrs_arr
 

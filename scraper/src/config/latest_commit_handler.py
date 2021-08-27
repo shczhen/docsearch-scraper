@@ -58,14 +58,11 @@ class UpdateLatestCommit:
                 'r+') as f:
             try:
                 data = json.load(f)
-                print('data is', data)
             except json.decoder.JSONDecodeError:
                 "Get Error when file is empty"
                 new_commit = {docs_index: head_commit}
-                print('new_commit', new_commit)
                 json.dump(new_commit, f)
             else:
-                print('not eror....', docs_index, head_commit)
                 data[docs_index] = head_commit
                 f.seek(0)
                 json.dump(data, f, indent=4)

@@ -11,6 +11,11 @@ from scrapy.spiders.sitemap import regex
 import re
 import os
 
+from scrapy.spiders import Spider
+from scrapy.http import Request, XmlResponse
+from scrapy.utils.sitemap import Sitemap, sitemap_urls_from_robots
+from scrapy.utils.gz import gunzip, gzip_magic_number
+
 # End of import for the sitemap behavior
 
 from scrapy.spidermiddlewares.httperror import HttpError
@@ -166,6 +171,7 @@ class DocumentationSpider(CrawlSpider, SitemapSpider):
             exit(EXIT_CODE_EXCEEDED_RECORDS)
 
     def parse_from_sitemap(self, response):
+        print('parse_from_sitemap')
         if self.reason_to_stop is not None:
             raise CloseSpider(reason=self.reason_to_stop)
 
@@ -177,6 +183,7 @@ class DocumentationSpider(CrawlSpider, SitemapSpider):
             # We don't return self.parse(response) in order to avoid crawling those web page
 
     def parse_from_start_url(self, response):
+        print('parse_from_start_url')
         if self.reason_to_stop is not None:
             raise CloseSpider(reason=self.reason_to_stop)
 
@@ -257,3 +264,58 @@ class DocumentationSpider(CrawlSpider, SitemapSpider):
                 c = getattr(self, c)
             self._cbs.append((regex(r), c))
         self._follow = [regex(x) for x in self.sitemap_follow]
+
+    def _parse_sitemap(self, response):
+        if response.url.endswith('/robots.txt'):
+            for url in sitemap_urls_from_robots(response.text, base_url=response.url):
+                yield Request(url, callback=self._parse_sitemap)
+        else:
+            body = self._get_sitemap_body(response)
+            if body is None:
+                logger.warning("Ignoring invalid sitemap: %(response)s",
+                               {'response': response}, extra={'spider': self})
+                return
+
+            s = Sitemap(body)
+            it = self.sitemap_filter(s)
+
+            if s.type == 'sitemapindex':
+                for loc in self.iterloc(it, self.sitemap_alternate_links):
+                    if any(x.search(loc) for x in self._follow):
+                        yield Request(loc, callback=self._parse_sitemap)
+            elif s.type == 'urlset':
+                for loc in self.iterloc(it, self.sitemap_alternate_links):
+                    for r, c in self._cbs:
+                        if r.search(loc):
+                            print('loc', loc, c)
+                            yield Request(loc, callback=c)
+                            break
+
+    def _get_sitemap_body(self, response):
+        """Return the sitemap body contained in the given response,
+        or None if the response is not a sitemap.
+        """
+        if isinstance(response, XmlResponse):
+            return response.body
+        elif gzip_magic_number(response):
+            return gunzip(response.body)
+        # actual gzipped sitemap files are decompressed above ;
+        # if we are here (response body is not gzipped)
+        # and have a response for .xml.gz,
+        # it usually means that it was already gunzipped
+        # by HttpCompression middleware,
+        # the HTTP response being sent with "Content-Encoding: gzip"
+        # without actually being a .xml.gz file in the first place,
+        # merely XML gzip-compressed on the fly,
+        # in other word, here, we have plain XML
+        elif response.url.endswith('.xml') or response.url.endswith('.xml.gz'):
+            return response.body
+
+
+    def iterloc(self, it, alt=False):
+        for d in it:
+            yield d['loc']
+
+            # Also consider alternate URLs (xhtml:link rel="alternate")
+            if alt and 'alternate' in d:
+                yield from d['alternate']

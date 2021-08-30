@@ -11,7 +11,7 @@ class URLSetter:
     docs_owner = None
     docs_lang = None
     docs_url_prefix = None
-    isIncremental = None
+    is_incremental = None
     GITHUT_API_BASE_URL = 'https://api.github.com/repos/'
     DOCS_WEBSITE_BASE_URL = ''
     DOCS_REPO_WITHOUT_LANG_PATH = [
@@ -21,15 +21,15 @@ class URLSetter:
     ]
     IGNORE_FILES = ['TOC.md', 'README.md']
 
-    def __init__(self, docs_info, isIncremntal, isCrawlLocalURL):
+    def __init__(self, docs_info, isIncremntal, crawl_local_url):
         self.docs_repo = docs_info['docs_repo']
         self.docs_version = docs_info['version']
         self.docs_owner = docs_info['owner']
         self.docs_lang = 'zh/' if docs_info['lang'] == 'zh' else ''
         self.docs_url_prefix = docs_info['docs_prefix']
-        self.isIncremental = isIncremntal
-        self.isCrawlLocalURL = isCrawlLocalURL
-        self.DOCS_WEBSITE_BASE_URL = 'http://localhost:9000/' if self.isCrawlLocalURL else 'https://docs.pingcap.com/'
+        self.is_incremental = isIncremntal
+        self.crawl_local_url = crawl_local_url
+        self.DOCS_WEBSITE_BASE_URL = self.crawl_local_url['base_url'] if self.crawl_local_url['is_crawl_local_url'] else 'https://docs.pingcap.com/'
         self.update_latest_commit = UpdateLatestCommit(docs_info)
 
     def gen_url(self, filename):
@@ -49,7 +49,7 @@ class URLSetter:
         delete_urls = []
 
 
-        if self.isIncremental:
+        if self.is_incremental:
             print('inside incremental...')
             base_commit = self.update_latest_commit.get_base_commit()
             head_commit = self.update_latest_commit.get_head_commit()

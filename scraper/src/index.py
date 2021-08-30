@@ -30,12 +30,12 @@ except ImportError:
 EXIT_CODE_NO_RECORD = 3
 
 
-def run_config(config, isIncremental, isCrawlLocalURL):
-    config = ConfigLoader(config, isIncremental, isCrawlLocalURL)
+def run_config(config, is_incremental, crawl_local_url):
+    config = ConfigLoader(config, is_incremental, crawl_local_url)
     CustomDownloaderMiddleware.driver = config.driver
     DocumentationSpider.NB_INDEXED = 0
 
-    strategy = DefaultStrategy(config, isCrawlLocalURL)
+    strategy = DefaultStrategy(config, crawl_local_url)
 
     algolia_helper = AlgoliaHelper(
         config.app_id,
@@ -44,7 +44,7 @@ def run_config(config, isIncremental, isCrawlLocalURL):
         config.index_name_tmp,
         AlgoliaSettings.get(config, strategy.levels),
         config.query_rules,
-        isIncremental
+        is_incremental
     )
 
     root_module = 'src.' if __name__ == '__main__' else 'scraper.src.'
@@ -106,7 +106,7 @@ def run_config(config, isIncremental, isCrawlLocalURL):
     print("")
 
     if DocumentationSpider.NB_INDEXED > 0:
-        if not isIncremental:
+        if not is_incremental:
             algolia_helper.commit_tmp_index()
 
         # update docsType-Version lastest commit to json file

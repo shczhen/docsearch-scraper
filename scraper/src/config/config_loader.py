@@ -53,8 +53,8 @@ class ConfigLoader:
     user_agent = 'Algolia DocSearch Crawler'
     only_content_level = False
     query_rules = []
-    isIncremental = False
-    isCrawlLocalURL = False
+    is_incremental = False
+    crawl_local_url = {}
 
     # data storage, starting here attribute are not config params
     config_file = None
@@ -70,10 +70,10 @@ class ConfigLoader:
 
     nb_hits_max = 6000000
 
-    def __init__(self, config, isIncremental, isCrawlLocalURL):
+    def __init__(self, config, is_incremental, crawl_local_url):
         data = self._load_config(config)
-        self.isIncremental = isIncremental
-        self.isCrawlLocalURL = isCrawlLocalURL
+        self.is_incremental = is_incremental
+        self.crawl_local_url = crawl_local_url
 
         # Fill self from config
         for key, value in list(data.items()):
@@ -138,7 +138,7 @@ class ConfigLoader:
                 self.start_urls, self.stop_urls)
 
     def get_start_and_delete_urls(self):
-        url_setter = URLSetter(self.docs_info, self.isIncremental, self.isCrawlLocalURL)
+        url_setter = URLSetter(self.docs_info, self.is_incremental, self.crawl_local_url)
         start_urls_arr,delete_ulrs_arr = url_setter.diff_files()
         return start_urls_arr, delete_ulrs_arr
 

@@ -9,14 +9,14 @@ from builtins import range
 class AlgoliaHelper:
     """AlgoliaHelper"""
 
-    def __init__(self, app_id, api_key, index_name, index_name_tmp, settings, query_rules, isIncremental):
+    def __init__(self, app_id, api_key, index_name, index_name_tmp, settings, query_rules, is_incremental):
         self.algolia_client = SearchClient.create(app_id, api_key)
         self.index_name = index_name
         self.algolia_index = self.algolia_client.init_index(self.index_name)
 
         # if incremental crawl, then will not replace index
         # otherwise, have to set a tmp index, and replace it when crawl successfully
-        if isIncremental:
+        if is_incremental:
             self.executable_algolia_index = self.algolia_index
         else:
             self.index_name_tmp = index_name_tmp

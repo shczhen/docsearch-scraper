@@ -1,4 +1,3 @@
-from os.path import dirname
 import requests
 import json
 import os
@@ -25,10 +24,12 @@ class UpdateLatestCommit:
         self.docs_lang = docs_info['lang']
         self.docs_ref = docs_info['ref']
         self.docs_url_prefix = docs_info['docs_prefix']
+        dirname = os.path.dirname(__file__)
+        self.latest_commit_file =  dirname + '/../../../algolia_configs/latest_commit.json'
 
     def get_base_commit(self):
         with open(
-                '/Users/yinixu/pingcap/docsearch-scraper/aloglia_configs/latest_commit.json',
+                self.latest_commit_file,
                 'r') as f:
             data = json.load(f)
             docs_index = self.docs_lang + '-' + self.docs_url_prefix + '-' + self.docs_version
@@ -49,12 +50,11 @@ class UpdateLatestCommit:
         return head_commit
 
     def update_base_commit(self):
-        print('updating base commit......')
         head_commit = self.get_head_commit()
         docs_index = self.docs_lang + '-' + self.docs_url_prefix + '-' + self.docs_version
 
         with open(
-                '/Users/yinixu/pingcap/docsearch-scraper/aloglia_configs/latest_commit.json',
+                self.latest_commit_file,
                 'r+') as f:
             try:
                 data = json.load(f)
@@ -67,4 +67,3 @@ class UpdateLatestCommit:
                 f.seek(0)
                 json.dump(data, f, indent=4)
                 f.truncate()
-                print('later', data)

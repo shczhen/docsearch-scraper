@@ -30,9 +30,6 @@ class RunConfig(AbstractCommand):
 
 
     def run(self, args):
-        # print('iscrawl', self.get_option("is_crawl_local_url", args))
-        # print(self.get_option("is_incremental", args))
-        # print(self.get_options())
         from scraper.src.index import run_config
         import re
 

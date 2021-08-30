@@ -11,7 +11,7 @@
   "start_urls": [],
   "delete_urls": [],
   "sitemap_urls": [
-    "http://localhost:9000/sitemap.xml"
+    "https://docs.pingcap.com/sitemap.xml"
   ],
   "selectors": {
     "default": {

@@ -23,9 +23,12 @@ class URLSetter:
 
     def __init__(self, docs_info, isIncremntal, crawl_local_url):
         self.docs_repo = docs_info['docs_repo']
-        self.docs_version = docs_info['version']
+        self.docs_version = 'stable' if ('isStable' in docs_info.keys() and docs_info['isStable']) else docs_info['version']
         self.docs_owner = docs_info['owner']
-        self.docs_lang = 'zh/' if docs_info['lang'] == 'zh' else ''
+        if self.docs_repo in self.DOCS_REPO_WITHOUT_LANG_PATH:
+            self.docs_lang = 'zh/' if docs_info['lang'] == 'zh' else ''
+        else:
+            self.docs_lang = docs_info['lang'] + '/'
         self.docs_url_prefix = docs_info['docs_prefix']
         self.is_incremental = isIncremntal
         self.crawl_local_url = crawl_local_url
@@ -33,10 +36,12 @@ class URLSetter:
         self.update_latest_commit = UpdateLatestCommit(docs_info)
 
     def gen_url(self, filename):
+        lang = '' if self.docs_lang == 'en/' else 'zh/'
         url_base = '' if os.path.basename(
             filename) == '_index.md' else os.path.basename(
                 filename.replace('.md', ''))
-        url = self.DOCS_WEBSITE_BASE_URL + self.docs_lang + self.docs_url_prefix + '/' + self.docs_version + '/' + url_base
+        url = self.DOCS_WEBSITE_BASE_URL + lang + self.docs_url_prefix + '/' + self.docs_version + '/' + url_base
+        print('url', url)
 
         return url
 
@@ -50,12 +55,11 @@ class URLSetter:
 
 
         if self.is_incremental:
-            print('inside incremental...')
             base_commit = self.update_latest_commit.get_base_commit()
             head_commit = self.update_latest_commit.get_head_commit()
 
             git_commit_compare_url = self.GITHUT_API_BASE_URL + self.docs_owner + '/' + self.docs_repo + '/compare/' + base_commit + '...' + head_commit
-            print('url=============', git_commit_compare_url)
+            print('git_commit_compare_url', git_commit_compare_url)
             resp = requests.get(git_commit_compare_url, headers=headers)
             json_text = json.loads(resp.text)
             files = json_text['files']
@@ -65,12 +69,9 @@ class URLSetter:
                 file_status = file['status']
 
                 if not filename.endswith('.md') or os.path.basename(filename) in self.IGNORE_FILES:
-                    print('not md')
                     continue
 
-                print('filename: ', filename.startswith(self.docs_lang), self.docs_lang)
                 if self.docs_repo not in self.DOCS_REPO_WITHOUT_LANG_PATH and not filename.startswith(self.docs_lang):
-                    print('not')
                     continue
 
                 if file_status == 'renamed':
@@ -94,10 +95,8 @@ class URLSetter:
                         self.gen_url(filename))
 
         else:
-            print('inside update base commit')
-            head_commit = self.update_latest_commit.update_base_commit()
-
-            start_url = self.DOCS_WEBSITE_BASE_URL + self.docs_lang + self.docs_url_prefix + '/' + self.docs_version + '/'
+            lang = '' if self.docs_lang == 'en/' else 'zh/'
+            start_url = self.DOCS_WEBSITE_BASE_URL + lang + self.docs_url_prefix + '/' + self.docs_version + '/'
             start_urls.append(start_url)
             delete_urls = []
 

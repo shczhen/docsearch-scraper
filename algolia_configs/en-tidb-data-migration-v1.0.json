@@ -1,12 +1,12 @@
 {
-  "index_name": "zh-tidb-data-migration-stable",
+  "index_name": "en-tidb-data-migration-v1.0",
   "docs_info": {
     "owner": "pingcap",
     "docs_repo": "docs-dm",
-    "ref": "release-2.0",
+    "ref": "release-1.0",
     "docs_prefix": "tidb-data-migration",
-    "lang": "zh",
-    "version": "stable"
+    "lang": "en",
+    "version": "v1.0"
   },
   "start_urls": [],
   "delete_urls": [],
@@ -15,14 +15,6 @@
   ],
   "selectors": {
     "default": {
-      "lvl0": ".doc-content h1",
-      "lvl1": ".doc-content h2",
-      "lvl2": ".doc-content h3",
-      "lvl3": ".doc-content h4",
-      "lvl4": ".doc-content h5",
-      "text": ".doc-content p, .doc-content li, .doc-content table tr, .doc-content code span"
-    },
-    "docs_cn": {
       "lvl0": ".doc-content h1",
       "lvl1": ".doc-content h2",
       "lvl2": ".doc-content h3",
@@ -52,5 +44,5 @@
     "428916846"
   ],
   "only_content_level": true,
-  "nb_hits": 7874
+  "nb_hits": 7609
 }

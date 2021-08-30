@@ -129,7 +129,6 @@ class ConfigLoader:
             self.min_indexed_level)
         start_urls_arr, delete_ulrs_arr = self.get_start_and_delete_urls()
         self.start_urls = UrlsParser.parse(start_urls_arr)
-        print('after parse: start_urls======', self.start_urls)
         self.delete_urls = delete_ulrs_arr
 
         # Build default allowed_domains from start_urls and stop_urls

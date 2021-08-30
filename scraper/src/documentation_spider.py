@@ -131,7 +131,6 @@ class DocumentationSpider(CrawlSpider, SitemapSpider):
     def start_requests(self):
         # Delete records of existing URLs
         if len(self.delete_urls) > 0:
-            print("trying to delete....: ", self.delete_urls)
             self.algolia_helper.delete_records(self.delete_urls)
 
         # We crawl according to the sitemap
@@ -171,7 +170,6 @@ class DocumentationSpider(CrawlSpider, SitemapSpider):
             exit(EXIT_CODE_EXCEEDED_RECORDS)
 
     def parse_from_sitemap(self, response):
-        print('parse_from_sitemap')
         if self.reason_to_stop is not None:
             raise CloseSpider(reason=self.reason_to_stop)
 
@@ -183,7 +181,6 @@ class DocumentationSpider(CrawlSpider, SitemapSpider):
             # We don't return self.parse(response) in order to avoid crawling those web page
 
     def parse_from_start_url(self, response):
-        print('parse_from_start_url')
         if self.reason_to_stop is not None:
             raise CloseSpider(reason=self.reason_to_stop)
 
@@ -287,7 +284,6 @@ class DocumentationSpider(CrawlSpider, SitemapSpider):
                 for loc in self.iterloc(it, self.sitemap_alternate_links):
                     for r, c in self._cbs:
                         if r.search(loc):
-                            print('loc', loc, c)
                             yield Request(loc, callback=c)
                             break
 

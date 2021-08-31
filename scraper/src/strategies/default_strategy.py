@@ -18,12 +18,12 @@ class DefaultStrategy(AbstractStrategy):
     """
     dom = None
 
-    def __init__(self, config, crawl_local_url):
+    def __init__(self, config):
         super(DefaultStrategy, self).__init__(config)
         self.levels = ['lvl0', 'lvl1', 'lvl2', 'lvl3', 'lvl4', 'lvl5', 'lvl6']
         self.global_content = {}
         self.page_rank = {}
-        self.crawl_local_url = crawl_local_url
+        self.crawl_local_url = config.crawl_local_url
 
     def select(self, path):
         """Select an element in the current DOM using specified CSS selector"""
@@ -62,7 +62,7 @@ class DefaultStrategy(AbstractStrategy):
         return record
 
     def repalce_localURL_with_prodURL(self, current_page_url):
-        replaced_url = current_page_url.replace(self.crawl_local_url['base_url'], 'https://docs.pingcap.com/')
+        replaced_url = current_page_url.replace(self.crawl_local_url, 'https://docs.pingcap.com/')
         return replaced_url
 
     def get_records_from_dom(self, current_page_url=None):
@@ -136,8 +136,8 @@ class DefaultStrategy(AbstractStrategy):
                                                              selectors,
                                                              self.levels)
 
-            url = self.repalce_localURL_with_prodURL(current_page_url) if self.crawl_local_url['is_crawl_local_url'] else current_page_url
-            url_without_variables = self.repalce_localURL_with_prodURL(current_page_url) if self.crawl_local_url['is_crawl_local_url'] else current_page_url
+            url = self.repalce_localURL_with_prodURL(current_page_url) if self.crawl_local_url != '' else current_page_url
+            url_without_variables = self.repalce_localURL_with_prodURL(current_page_url) if self.crawl_local_url != '' else current_page_url
             # noinspection PyDictCreation
             record = {
                 'anchor': self._get_closest_anchor(anchors),

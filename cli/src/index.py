@@ -40,7 +40,7 @@ if not path.isfile(env_file):
 
     print("")
 
-load_dotenv(env_file)
+load_dotenv(env_file, override=True)
 
 ADMIN = True
 CREDENTIALS = True

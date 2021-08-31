@@ -1,5 +1,5 @@
 FROM algolia/docsearch-scraper-base
-LABEL maintainer="docsearch@algolia.com"
+LABEL maintainer="xuyini@pingcap.com"
 
 WORKDIR /root
 COPY scraper/src ./src

@@ -44,8 +44,8 @@ class RunConfigDocker(AbstractCommand):
             container_name = "docsearch-scraper-dev"
             image_name = "algolia/docsearch-scraper-dev"
         else:
-            container_name = "docsearch-scraper"
-            image_name = "algolia/docsearch-scraper"
+            container_name = "docsearch-scraper-incremental"
+            image_name = "algolia/docsearch-scraper-incremental"
 
         run_command = [
             "docker",
@@ -58,6 +58,8 @@ class RunConfigDocker(AbstractCommand):
             "API_KEY=" + os.environ.get("API_KEY"),
             "-e",
             "CONFIG=" + config,
+            "-e",
+            "ISINCREMENTAL"
         ]
 
         if from_local_code:

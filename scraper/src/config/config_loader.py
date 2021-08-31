@@ -10,7 +10,7 @@ from distutils.util import strtobool
 import json
 import os
 import copy
-from scraper.src.config.urls_setter import URLSetter
+from .urls_setter import URLSetter
 
 from .config_validator import ConfigValidator
 from .nb_hits_updater import NbHitsUpdater
@@ -54,7 +54,6 @@ class ConfigLoader:
     only_content_level = False
     query_rules = []
     is_incremental = False
-    crawl_local_url = {}
 
     # data storage, starting here attribute are not config params
     config_file = None
@@ -70,10 +69,9 @@ class ConfigLoader:
 
     nb_hits_max = 6000000
 
-    def __init__(self, config, is_incremental, crawl_local_url):
+    def __init__(self, config, is_incremental=False):
         data = self._load_config(config)
         self.is_incremental = is_incremental
-        self.crawl_local_url = crawl_local_url
 
         # Fill self from config
         for key, value in list(data.items()):

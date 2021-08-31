@@ -14,7 +14,7 @@ class UpdateLatestCommit:
     GITHUT_API_BASE_URL = 'https://api.github.com/repos/'
     headers = {
         'Accept': 'application/vnd.github.v3+json',
-        'Authorization': 'token ' + os.environ.get('GITHUB_AUTH_TOKEN')
+        'Authorization': 'token 36ad289ee9270191e028e18d5a0a50f82ad829ba'
     }
 
     def __init__(self, docs_info):
@@ -25,7 +25,7 @@ class UpdateLatestCommit:
         self.docs_ref = docs_info['ref']
         self.docs_url_prefix = docs_info['docs_prefix']
         dirname = os.path.dirname(__file__)
-        self.latest_commit_file =  dirname + '/../../../algolia_configs/latest_commit.json'
+        self.latest_commit_file =  dirname + '/../latest_commit.json'
 
     def get_base_commit(self):
         with open(
@@ -34,7 +34,6 @@ class UpdateLatestCommit:
             data = json.load(f)
             docs_index = self.docs_lang + '-' + self.docs_url_prefix + '-' + self.docs_version
             base_commit = data[docs_index]
-            print('read docs_index', data, docs_index)
 
         return base_commit
 

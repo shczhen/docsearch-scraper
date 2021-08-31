@@ -30,12 +30,12 @@ except ImportError:
 EXIT_CODE_NO_RECORD = 3
 
 
-def run_config(config, is_incremental, crawl_local_url):
-    config = ConfigLoader(config, is_incremental, crawl_local_url)
+def run_config(config, is_incremental=False):
+    config = ConfigLoader(config, is_incremental)
     CustomDownloaderMiddleware.driver = config.driver
     DocumentationSpider.NB_INDEXED = 0
 
-    strategy = DefaultStrategy(config, crawl_local_url)
+    strategy = DefaultStrategy(config)
 
     algolia_helper = AlgoliaHelper(
         config.app_id,

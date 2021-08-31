@@ -57,6 +57,7 @@ class URLSetter:
         delete_urls = []
 
         if self.is_incremental:
+            print('inside incremental')
             base_commit = self.update_latest_commit.get_base_commit()
             head_commit = self.update_latest_commit.get_head_commit()
 

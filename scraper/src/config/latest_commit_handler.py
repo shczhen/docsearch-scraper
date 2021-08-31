@@ -40,10 +40,11 @@ class UpdateLatestCommit:
     def get_head_commit(self):
         url = self.GITHUT_API_BASE_URL + self.docs_owner + '/' + self.docs_repo + '/commits/' + self.docs_ref
 
-        print('url-------', url)
+        print('url -------', url)
 
         resp = requests.get(url, headers=self.headers)
         json_text = json.loads(resp.text)
+        print('json_text-------', json_text)
         head_commit = json_text['sha']
 
         return head_commit

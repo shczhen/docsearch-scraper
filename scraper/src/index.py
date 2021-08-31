@@ -124,4 +124,4 @@ def run_config(config, is_incremental=False):
 if __name__ == '__main__':
     from os import environ
 
-    run_config(environ['CONFIG'])
+    run_config(environ['CONFIG'], environ['ISINCREMENTAL'])

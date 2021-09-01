@@ -14,7 +14,7 @@ class UpdateLatestCommit:
     GITHUT_API_BASE_URL = 'https://api.github.com/repos/'
     headers = {
         'Accept': 'application/vnd.github.v3+json',
-        'Authorization': 'token 36ad289ee9270191e028e18d5a0a50f82ad829ba'
+        'Authorization': 'token ' + os.environ.get('GITHUB_AUTH_TOKEN')
     }
 
     def __init__(self, docs_info):
@@ -40,11 +40,8 @@ class UpdateLatestCommit:
     def get_head_commit(self):
         url = self.GITHUT_API_BASE_URL + self.docs_owner + '/' + self.docs_repo + '/commits/' + self.docs_ref
 
-        print('url -------', url)
-
         resp = requests.get(url, headers=self.headers)
         json_text = json.loads(resp.text)
-        print('json_text-------', json_text)
         head_commit = json_text['sha']
 
         return head_commit
@@ -52,7 +49,6 @@ class UpdateLatestCommit:
     def update_base_commit(self):
         head_commit = self.get_head_commit()
         docs_index = self.docs_lang + '-' + self.docs_url_prefix + '-' + self.docs_version
-
         with open(
                 self.latest_commit_file,
                 'r+') as f:

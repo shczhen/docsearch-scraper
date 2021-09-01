@@ -15,8 +15,7 @@
     "zh-tidb-data-migration-v2.0": "1f61c5fde6d659f2a5e3be6e687fcec24c1b95a0",
     "zh-dev-guide-dev": "817c9e71363c1630a0f668f2669035ceffa19a02",
     "en-tidbcloud-public-preview": "644aeb66d2a25acebe7c397dd655484a4c0bf531",
-    "en-tidb-dev": "2297e8c6432bbd4832765cb5f755a70b2e7bc45f",
+    "en-tidb-dev": "7cf0a7008c4de7f98d13bccd6d28331da79deb52",
     "en-tidb-v5.1": "d891f183e614ad59456f964e81cf30663e39fcbf",
-    "en-tidb-v5.2": "fce73ee6b229ce20bef5946290fba9c402eccd29",
-    "zh-tidb-dev": "c3d5c49cdacd49b491dc2e096e7a258fbe2d585c"
+    "en-tidb-v5.2": "00f7d0c4e461a836bd948fa3dbc1844500bc0a48"
 }

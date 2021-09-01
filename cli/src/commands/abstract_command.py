@@ -54,10 +54,7 @@ class AbstractCommand:
         merge_env.update(env)
 
         from subprocess import Popen
-        print('merge_env', merge_env)
         p = Popen(arguments, env=merge_env)
-        print('arguments', arguments)
-        print('p', p)
         try:
             p.wait()
         except KeyboardInterrupt:

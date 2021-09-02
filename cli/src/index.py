@@ -42,6 +42,8 @@ if not path.isfile(env_file):
 
 load_dotenv(env_file, override=True)
 
+print('environ["APPLICATION_ID"]', environ["APPLICATION_ID"], environ["API_KEY"], environ["GITHUB_AUTH_TOKEN"])
+
 ADMIN = True
 CREDENTIALS = True
 

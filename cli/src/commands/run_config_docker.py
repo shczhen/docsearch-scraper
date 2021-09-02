@@ -28,6 +28,7 @@ class RunConfigDocker(AbstractCommand):
         return isinstance(args[1], str) and args[1].lower() == "true"
 
     def run(self, args):
+        print('args: ', args)
 
         self.check_not_docsearch_app_id("run a config manually")
 
@@ -59,7 +60,7 @@ class RunConfigDocker(AbstractCommand):
             "-e",
             "CONFIG=" + config,
             "-e",
-            "ISINCREMENTAL"
+            "ISINCREMENTAL="
         ]
 
         if from_local_code:

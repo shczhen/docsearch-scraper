@@ -126,5 +126,9 @@ def run_config(config, is_incremental=False):
 
 if __name__ == '__main__':
     from os import environ
+    ISINCREMENTAL = True
 
-    run_config(environ['CONFIG'], environ['ISINCREMENTAL'])
+    if ("ISINCREMENTAL" not in environ or len(environ["ISINCREMENTAL"]) == 0):
+        ISINCREMENTAL = False
+
+    run_config(environ['CONFIG'], ISINCREMENTAL)

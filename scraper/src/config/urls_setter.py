@@ -49,12 +49,13 @@ class URLSetter:
     def diff_files(self):
         headers = {
             'Accept': 'application/vnd.github.v3+json',
-            'Authorization': 'token ' + os.environ.get('GITHUB_AUTH_TOKEN')
+            'Authorization': 'token ' + os.environ.get('GITHUB_AUTH_TOKEN', '')
         }
         start_urls = []
         delete_urls = []
 
         if self.is_incremental:
+            print('incremental ....')
             base_commit = self.update_latest_commit.get_base_commit()
             head_commit = self.update_latest_commit.get_head_commit()
 
@@ -94,6 +95,7 @@ class URLSetter:
                     start_urls.append(_filename)
 
         else:
+            print('fully....')
             lang = '' if self.docs_lang == 'en' else 'zh/'
             start_url = self.DOCS_WEBSITE_BASE_URL + lang + \
                 self.docs_url_prefix + '/' + self.docs_version + '/'
@@ -101,7 +103,6 @@ class URLSetter:
             delete_urls = []
 
         print('starturl\n', len(start_urls), start_urls)
-        print('\n')
         print('delete_urls\n', len(delete_urls), delete_urls)
 
         return start_urls, delete_urls

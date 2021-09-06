@@ -42,7 +42,6 @@ class URLSetter:
                 filename.replace('.md', ''))
         url = self.DOCS_WEBSITE_BASE_URL + lang + self.docs_url_prefix + \
             '/' + self.docs_version + '/' + url_base
-        print('url', url)
 
         return url
 
@@ -55,7 +54,7 @@ class URLSetter:
         delete_urls = []
 
         if self.is_incremental:
-            print('incremental ....')
+            print('incremental update....')
             base_commit = self.update_latest_commit.get_base_commit()
             head_commit = self.update_latest_commit.get_head_commit()
 
@@ -95,14 +94,11 @@ class URLSetter:
                     start_urls.append(_filename)
 
         else:
-            print('fully....')
+            print('fully update....')
             lang = '' if self.docs_lang == 'en' else 'zh/'
             start_url = self.DOCS_WEBSITE_BASE_URL + lang + \
                 self.docs_url_prefix + '/' + self.docs_version + '/'
             start_urls.append(start_url)
             delete_urls = []
-
-        print('starturl\n', len(start_urls), start_urls)
-        print('delete_urls\n', len(delete_urls), delete_urls)
 
         return start_urls, delete_urls

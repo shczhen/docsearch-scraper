@@ -1,0 +1,13 @@
+{
+    "en-tidb-in-kubernetes-dev": "32104a2211817745af27d18020f4236435d02ae0",
+    "en-tidb-in-kubernetes-v1.2": "95e576e2a97e881a43be282d2ca278c7759e5dfe",
+    "en-tidb-data-migration-v2.0": "a909a69f89a85c0e58ca65d75a3b753251ae1fd6",
+    "zh-tidb-data-migration-dev": "e22544a36df16d69a0825b7928a3c8f4bb9ceefe",
+    "zh-tidb-data-migration-v2.0": "a909a69f89a85c0e58ca65d75a3b753251ae1fd6",
+    "zh-dev-guide-dev": "817c9e71363c1630a0f668f2669035ceffa19a02",
+    "en-tidbcloud-public-preview": "9accf342d9963f68f976039a2666be61cd6617bc",
+    "zh-tidb-in-kubernetes-v1.2": "95e576e2a97e881a43be282d2ca278c7759e5dfe",
+    "en-tidb-data-migration-dev": "e22544a36df16d69a0825b7928a3c8f4bb9ceefe",
+    "en-tidb-dev": "7f8909a4772e291ba206587d0c8703d6028dd16e",
+    "zh-tidb-dev": "b5e7456d81009946f739e49e023f41b6e42f0c19"
+}

@@ -192,7 +192,6 @@ class DefaultStrategy(AbstractStrategy):
                 # Add variables to the record
                 for attr, value, url_without_variables in UrlsParser.get_url_variables(
                         current_page_url, self.config.start_urls):
-                    print('get url variables....', attr, value, url_without_variables)
                     record['url_without_variables'] = url_without_variables
                     record[attr] = value
 

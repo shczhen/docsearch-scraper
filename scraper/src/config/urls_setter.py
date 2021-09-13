@@ -54,7 +54,7 @@ class URLSetter:
         delete_urls = []
 
         if self.is_incremental:
-            print('incremental update....')
+            print('***incremental update***')
             base_commit = self.update_latest_commit.get_base_commit()
             head_commit = self.update_latest_commit.get_head_commit()
 
@@ -94,7 +94,7 @@ class URLSetter:
                     start_urls.append(_filename)
 
         else:
-            print('fully update....')
+            print('***fully update***')
             lang = '' if self.docs_lang == 'en' else 'zh/'
             start_url = self.DOCS_WEBSITE_BASE_URL + lang + \
                 self.docs_url_prefix + '/' + self.docs_version + '/'

@@ -117,6 +117,7 @@ def run_config(config, is_incremental=False):
     else:
         update_latest_commit.update_base_commit()
         print('Crawling issue: nbHits 0 for ' + config.index_name)
+        print('')
         exit(EXIT_CODE_NO_RECORD)
 
     # update docsType-Version lastest commit to json file

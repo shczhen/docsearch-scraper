@@ -24,7 +24,7 @@ class UpdateLatestCommit:
         self.docs_lang = docs_info['lang']
         self.docs_ref = docs_info['ref']
         self.docs_url_prefix = docs_info['docs_prefix']
-        self.latest_commit_file ='/Users/yinixu/pingcap/docsearch-scraper/algolia_configs/latest_commit.json'
+        self.latest_commit_file ='/data/latest_commit.json'
 
     def get_base_commit(self):
         with open(self.latest_commit_file, 'r') as f:

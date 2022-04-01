@@ -29,7 +29,10 @@ class UpdateLatestCommit:
     def get_base_commit(self):
         with open(self.latest_commit_file, 'r') as f:
             data = json.load(f)
-            docs_index = self.docs_lang + '-' + self.docs_url_prefix + '-' + self.docs_version
+            if len(self.docs_version) > 0:
+                docs_index = self.docs_lang + '-' + self.docs_url_prefix + '-' + self.docs_version
+            else:
+                docs_index = self.docs_lang + '-' + self.docs_url_prefix
             base_commit = data[docs_index]
 
         return base_commit
@@ -44,7 +47,10 @@ class UpdateLatestCommit:
 
     def update_base_commit(self):
         head_commit = self.get_head_commit()
-        docs_index = self.docs_lang + '-' + self.docs_url_prefix + '-' + self.docs_version
+        if len(self.docs_version) > 0:
+            docs_index = self.docs_lang + '-' + self.docs_url_prefix + '-' + self.docs_version
+        else:
+            docs_index = self.docs_lang + '-' + self.docs_url_prefix
         with open(self.latest_commit_file, 'r+') as f:
             try:
                 data = json.load(f)

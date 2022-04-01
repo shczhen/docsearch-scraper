@@ -37,6 +37,7 @@ class URLSetter:
 
     def gen_url(self, filename):
         lang = '' if self.docs_lang == 'en' else 'zh/'
+        version = (self.docs_version + '/') if len(self.docs_version) > 0 else ''
         url_base = '' if os.path.basename(
             filename) == '_index.md' else os.path.basename(
                 filename.replace('.md', ''))
@@ -99,8 +100,9 @@ class URLSetter:
         else:
             print('***fully update***')
             lang = '' if self.docs_lang == 'en' else 'zh/'
+            version = (self.docs_version + '/') if len(self.docs_version) > 0 else ''
             start_url = self.DOCS_WEBSITE_BASE_URL + lang + \
-                self.docs_url_prefix + '/' + self.docs_version + '/'
+                self.docs_url_prefix + '/' + version
             start_urls.append(start_url)
             delete_urls = []
 

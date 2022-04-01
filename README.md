@@ -12,7 +12,7 @@ place.
 ```
 git clone https://github.com/YiniXu9506/docsearch-scraper
 cd docsearch-scaper
-git check incrementalCrawl
+git checkout incrementalCrawl
 ```
 
 ## Set up your environment
@@ -71,12 +71,52 @@ Since the scraper cannot parse the url with port, like `http://localhost:9000`, 
 #### Crawl fully
 
 ```
-docker run -it --env-file=.env -e "CONFIG=$(cat /HOME_PATH/FILENAME.json | jq -r tostring)" xuyini/algolia-docsearch-scraper-incremental#### Crawl inrementally
+docker run -it --env-file=.env -e "CONFIG=$(cat /HOME_PATH/FILENAME.json | jq -r tostring)" xuyini/algolia-docsearch-scraper-incremental
+
 ```
+
+#### Crawl inrementally
 
 ```
 docker run -it --env-file=.env -e "CONFIG=$(cat /HOME_PATH/FILENAME.json | jq -r tostring)" -e "ISINCREMENTAL=True" xuyini/algolia-docsearch-scraper-incremental
 ```
+
+## Docker build
+
+If you have any update on docsearch and want to publish to docker, the steps are following:
+
+1. Login docker
+
+    `docker login hub-new.pingcap.net`
+
+    If failed, please ask access from maintainer of hub-new.pingcap.net.
+
+2. Build docker
+
+    ```
+    cd docsearch-scraper
+    ./docsearch docker:build
+    ```
+
+    In this step, you may encouter a problem, which is `ERROR [13/26] RUN apt-get update -y && apt-get install -yq   google-chrome-stable=xx.xx.xx.xxx-1 unzip`
+
+    You can refer to [Ubuntu](https://www.ubuntuupdates.org/ppa/google_chrome?dist=stable) pages to get the stable version of google chrome.
+
+    use `docker image list` to see whether docker build success or not, if success, you will see an image named `algolia/docsearch-scraper-incremental` with tag `latest`
+
+3. Docker tag
+
+    ```
+    docker tag algolia/docsearch-scraper-incremental:latest hub-new.pingcap.net/xuyini/algolia-docsearch-scraper-incremental:v0.2
+    ```
+
+3. Push docsearch to docker (using internal internet)
+
+    ```
+    docker push hub-new.pingcap.net/xuyini/algolia-docsearch-scraper-incremental:v0.2
+    ```
+
+    You can also login to hub-new.pingcap.net to check your image.
 
 ## Installation and Usage
 

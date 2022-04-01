@@ -40,9 +40,12 @@ class URLSetter:
         url_base = '' if os.path.basename(
             filename) == '_index.md' else os.path.basename(
                 filename.replace('.md', ''))
-        url = self.DOCS_WEBSITE_BASE_URL + lang + self.docs_url_prefix + \
-            '/' + self.docs_version + '/' + url_base
-
+        if len(self.docs_version) > 0:
+            url = self.DOCS_WEBSITE_BASE_URL + lang + self.docs_url_prefix + \
+                '/' + self.docs_version + '/' + url_base
+        else:
+            url = self.DOCS_WEBSITE_BASE_URL + lang + self.docs_url_prefix + \
+                '/' + url_base
         return url
 
     def diff_files(self):

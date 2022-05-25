@@ -16,9 +16,7 @@ jobs:
           ref: "incrementalCrawl"
       - name: Run scripts
         run: |
-          pip install --user pipenv
-          pipenv install
-          pipenv shell
+          pip install -r requirements.txt
           echo "APPLICATION_ID=${{ secrets.GATSBY_ALGOLIA_APPLICATION_ID }}\nAPI_KEY=${{ secrets.GATSBY_ALGOLIA_API_KEY }}\nGITHUB_AUTH_TOKEN=${{ secrets.GH_AUTH_TOKEN }}" > .env
           ./docsearch run algolia_configs/zh-tidb-v6.0.json --is_incremental
           git status

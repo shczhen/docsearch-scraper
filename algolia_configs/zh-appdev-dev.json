@@ -1,18 +1,18 @@
 {
-  "index_name": "en-tidbcloud-public-preview",
+  "index_name": "zh-appdev-dev",
   "docs_info": {
-    "owner": "tidbcloud",
-    "docs_repo": "dbaas-docs",
+    "owner": "pingcap",
+    "docs_repo": "docs-appdev",
     "ref": "master",
-    "docs_prefix": "tidbcloud",
-    "lang": "en",
-    "version": "public-preview"
+    "docs_prefix": "appdev",
+    "lang": "zh",
+    "version": "dev"
   },
   "start_urls": [],
   "crawl_local_url": "",
   "delete_urls": [],
   "sitemap_urls": [
-    "https://docs.pingcap.com/sitemap.xml"
+    "https://docs.pingcap.com/sitemap/sitemap-index.xml"
   ],
   "selectors": {
     "default": {
@@ -45,5 +45,5 @@
     "428916846"
   ],
   "only_content_level": true,
-  "nb_hits": 2153
+  "nb_hits": 143
 }

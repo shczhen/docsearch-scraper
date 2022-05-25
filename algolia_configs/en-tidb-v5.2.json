@@ -6,14 +6,13 @@
         "ref": "release-5.2",
         "docs_prefix": "tidb",
         "lang": "en",
-        "version": "v5.2",
-        "isStable": true
+        "version": "v5.2"
     },
     "start_urls": [],
     "crawl_local_url": "",
     "delete_urls": [],
     "sitemap_urls": [
-        "https://docs.pingcap.com/sitemap.xml"
+        "https://docs.pingcap.com/sitemap/sitemap-index.xml"
     ],
     "selectors": {
         "default": {
@@ -31,6 +30,11 @@
     "custom_settings": {
         "attributesForFaceting": [
             "url_without_anchor"
+        ],
+        "attributesToHighlight": [
+            "content",
+            "url",
+            "hierarchy"
         ],
         "attributeForDistinct": "url_without_anchor",
         "distinct": true,

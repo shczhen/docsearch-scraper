@@ -1,10 +1,10 @@
 {
-  "index_name": "en-tidb-dev",
+  "index_name": "en-appdev-dev",
   "docs_info": {
     "owner": "pingcap",
-    "docs_repo": "docs",
+    "docs_repo": "docs-appdev",
     "ref": "master",
-    "docs_prefix": "tidb",
+    "docs_prefix": "appdev",
     "lang": "en",
     "version": "dev"
   },
@@ -31,11 +31,6 @@
     "attributesForFaceting": [
       "url_without_anchor"
     ],
-    "attributesToHighlight": [
-      "content",
-      "url",
-      "hierarchy"
-    ],
     "attributeForDistinct": "url_without_anchor",
     "distinct": true,
     "disableTypoToleranceOnWords": [
@@ -50,5 +45,5 @@
     "428916846"
   ],
   "only_content_level": true,
-  "nb_hits": 96722
+  "nb_hits": 143
 }

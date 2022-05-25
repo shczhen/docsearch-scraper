@@ -1,19 +1,17 @@
 {
-  "index_name": "en-tidb-dev",
+  "index_name": "en-tidb-v6.0",
   "docs_info": {
     "owner": "pingcap",
     "docs_repo": "docs",
-    "ref": "master",
+    "ref": "release-6.0",
     "docs_prefix": "tidb",
     "lang": "en",
-    "version": "dev"
+    "version": "v6.0"
   },
   "start_urls": [],
   "crawl_local_url": "",
   "delete_urls": [],
-  "sitemap_urls": [
-    "https://docs.pingcap.com/sitemap/sitemap-index.xml"
-  ],
+  "sitemap_urls": ["https://docs.pingcap.com/sitemap/sitemap-index.xml"],
   "selectors": {
     "default": {
       "lvl0": ".doc-content h1",
@@ -24,18 +22,10 @@
       "text": ".doc-content p, .doc-content li, .doc-content table tr, .doc-content code span"
     }
   },
-  "selectors_exclude": [
-    ".error"
-  ],
+  "selectors_exclude": [".error"],
   "custom_settings": {
-    "attributesForFaceting": [
-      "url_without_anchor"
-    ],
-    "attributesToHighlight": [
-      "content",
-      "url",
-      "hierarchy"
-    ],
+    "attributesForFaceting": ["url_without_anchor"],
+    "attributesToHighlight": ["content", "url", "hierarchy"],
     "attributeForDistinct": "url_without_anchor",
     "distinct": true,
     "disableTypoToleranceOnWords": [
@@ -46,9 +36,7 @@
       "tidb 4.0"
     ]
   },
-  "conversation_id": [
-    "428916846"
-  ],
+  "conversation_id": ["428916846"],
   "only_content_level": true,
-  "nb_hits": 96722
+  "nb_hits": 159018
 }

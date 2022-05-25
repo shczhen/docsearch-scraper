@@ -23,7 +23,7 @@ jobs:
           export LANG=C.UTF-8
           pipenv install
           echo "APPLICATION_ID=${{ secrets.GATSBY_ALGOLIA_APPLICATION_ID }}\nAPI_KEY=${{ secrets.GATSBY_ALGOLIA_API_KEY }}\nGITHUB_AUTH_TOKEN=${{ secrets.GH_AUTH_TOKEN }}" > .env
-          sudo mkdir -p /data
+          mkdir -p /data
           cp algolia_configs/latest_commit.json /data/latest_commit.json
           pipenv run ./docsearch run algolia_configs/zh-tidb-v6.0.json --is_incremental
           cp /data/latest_commit.json algolia_configs/latest_commit.json

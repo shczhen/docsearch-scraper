@@ -19,6 +19,8 @@ jobs:
       - name: Run scripts
         run: |
           pip3 install pipenv
+          export LC_ALL=C.UTF-8
+          export LANG=C.UTF-8
           pipenv install
           pipenv shell
           echo "APPLICATION_ID=${{ secrets.GATSBY_ALGOLIA_APPLICATION_ID }}\nAPI_KEY=${{ secrets.GATSBY_ALGOLIA_API_KEY }}\nGITHUB_AUTH_TOKEN=${{ secrets.GH_AUTH_TOKEN }}" > .env

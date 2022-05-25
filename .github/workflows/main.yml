@@ -9,6 +9,8 @@ jobs:
   firstJob:
     name: first job
     runs-on: ubuntu-18.04
+    container:
+      image: pingcapshczhen/docsearch
 
     steps:
       - uses: actions/checkout@v3
